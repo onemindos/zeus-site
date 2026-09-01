@@ -1,103 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zeus DeLaCruz — Building Sovereign Systems</title>
-<meta name="description" content="Zeus DeLaCruz builds sovereign operations systems — open-source situational awareness, AI agent fabrics, and self-hosted infrastructure. Writer, builder, teacher.">
-<style>
-:root{--bg:#0a0a0b;--panel:#101013;--line:#222228;--text:#ececee;--dim:#90939a;--acc:#ffb454;--acc2:#c8a3ff}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;line-height:1.8;font-size:17px}
-.wrap{max-width:720px;margin:0 auto;padding:0 24px}
-.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace}
-header{padding:22px 0;border-bottom:1px solid var(--line)}
-header .wrap{display:flex;justify-content:space-between;align-items:baseline}
-.logo{font-weight:700;text-decoration:none;color:var(--text);font-size:15px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.06em}
-nav a{color:var(--dim);text-decoration:none;margin-left:20px;font-size:14px;font-family:ui-monospace,Menlo,monospace}
-nav a:hover{color:var(--acc)}
-.hero{padding:96px 0 80px}
-.kicker{color:var(--acc);font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:18px}
-h1{font-size:clamp(34px,6vw,58px);line-height:1.12;letter-spacing:-.015em;font-weight:700;margin-bottom:26px}
-h1 em{font-style:italic;color:var(--acc)}
-.hero p{color:var(--dim);font-size:18.5px;max-width:560px}
-section{padding:56px 0;border-top:1px solid var(--line)}
-h2{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);font-family:ui-monospace,Menlo,monospace;margin-bottom:30px;font-weight:600}
-.list{display:flex;flex-direction:column;gap:26px}
-.item{border-left:2px solid var(--line);padding-left:22px;transition:border-color .2s}
-.item:hover{border-color:var(--acc)}
-.item .when{color:var(--dim);font-size:12.5px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.1em;display:block;margin-bottom:6px}
-.item h3{font-size:20px;margin-bottom:8px;font-weight:700}
-.item h3 a{color:var(--text);text-decoration:none}
-.item h3 a:hover{color:var(--acc)}
-.item p{color:var(--dim);font-size:15.5px}
-.offer{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:32px;margin-bottom:20px}
-.offer h3{font-size:19px;margin-bottom:10px}
-.offer p{color:var(--dim);font-size:15px;margin-bottom:18px}
-.cta{display:inline-block;background:var(--acc);color:#1a1206;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:700;font-family:ui-monospace,Menlo,monospace;font-size:13px;letter-spacing:.04em}
-.cta:hover{filter:brightness(1.1)}
-.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.links a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;color:var(--text);text-decoration:none;transition:border-color .2s}
-.links a:hover{border-color:var(--acc)}
-.links b{display:block;font-size:14px;margin-bottom:4px}
-.links span{color:var(--dim);font-size:13px}
-footer{padding:44px 0 56px;border-top:1px solid var(--line);color:var(--dim);font-size:13.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-a{color:var(--acc)}
-</style>
-</head>
-<body>
-<header><div class="wrap">
-<a class="logo" href="/">ZEUS DELACRUZ</a>
-<nav>
-<a href="/#writing">Writing</a>
-<a href="/#work-with-me">Work With Me</a>
-<a href="/#find-me">Find Me</a>
-</nav>
-</div></header>
-
-<div class="hero"><div class="wrap">
-<div class="kicker">// Builder · Teacher · Operator</div>
-<h1>I build systems that make <em>people and land</em> more sovereign.</h1>
-<p>Situational awareness platforms on the TAK ecosystem. AI agent fabrics that watch, decide, and act. Self-hosted infrastructure with no subscription leash. I build it in public, teach it as I go, and help others run it on their own operations.</p>
-</div></div>
-
-<section id="writing"><div class="wrap">
-<h2>Writing — the build in public</h2>
-<div class="list">
-<div class="item"><span class="when">COMING SOON</span><h3><a href="#">Why I bet on TAK for civilian operations</a></h3><p>The US military's situational awareness platform is open source. Almost nobody outside .mil is using it. That's the opportunity — here's the map.</p></div>
-<div class="item"><span class="when">COMING SOON</span><h3><a href="#">The 10-command architecture that runs my homestead</a></h3><p>NATS, sensors, drones, AI agents, and a map — one bus, one mind. The Starter Kit broken down command by command.</p></div>
-<div class="item"><span class="when">COMING SOON</span><h3><a href="#">AI agents that operate, not assist</a></h3><p>Chat panels are a commodity. Agents that perceive the bus, decide, and act through it are a different species. How we build them.</p></div>
-<div class="item"><span class="when">COMING SOON</span><h3><a href="#">The sovereign homestead tech stack</a></h3><p>Everything I run, why I run it, and what it costs. From message bus to map server to the AI that watches it all.</p></div>
-</div>
-</div></section>
-
-<section id="work-with-me"><div class="wrap">
-<h2>Work with me</h2>
-<div class="offer">
-<h3>Consulting &amp; Done-With-You Architecture</h3>
-<p>Sovereign operations for your land, business, or team — TAK deployment, sensor integration, AI agent setup, or the full loop. Limited slots monthly; I only take work I'd run myself.</p>
-<a class="cta" href="mailto:zeus@zeusdelacruz.com">Start a conversation →</a>
-</div>
-<div class="offer">
-<h3>Coaching &amp; Community</h3>
-<p>Learn the Sovereign Stack with me and a crew of builders doing the same. Weekly live builds, real missions, zero fluff.</p>
-<a class="cta" href="https://community.onemindos.com">Join the community →</a>
-</div>
-</div></section>
-
-<section id="find-me"><div class="wrap">
-<h2>Find me</h2>
-<div class="links">
-<a href="https://community.onemindos.com"><b>OneMind OS Community</b><span>The main event — builds, missions, teaching</span></a>
-<a href="https://github.com/onemindos"><b>GitHub</b><span>The code, all of it, in public</span></a>
-<a href="https://buildingonemind.com"><b>Building OneMind</b><span>The journal of the build</span></a>
-<a href="mailto:zeus@zeusdelacruz.com"><b>Email</b><span>zeus@zeusdelacruz.com</span></a>
-</div>
-</div></section>
-
-<footer><div class="wrap">
-<div>© 2026 Zeus DeLaCruz</div>
-<div class="mono">built in public · runs on sovereign metal</div>
-</div></footer>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zeus DeLaCruz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
