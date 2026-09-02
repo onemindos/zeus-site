@@ -1,0 +1,9 @@
+services:
+  zeus-site:
+    build: .
+    container_name: zeus-site
+    restart: always
+    ports:
+      - "3001:80"
+    environment:
+      - NODE_ENV=production
