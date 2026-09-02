@@ -19,8 +19,10 @@ jobs:
       - name: Write env
         env:
           GHOST_ZEUS_CONTENT_KEY: ${{ secrets.GHOST_ZEUS_CONTENT_KEY }}
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET_ZEUS }}
         run: |
-          printf 'GHOST_URL=http://host.docker.internal:2368\nGHOST_CONTENT_API_KEY=%s\n' "$GHOST_ZEUS_CONTENT_KEY" > .env.production
+          printf 'GHOST_URL=http://host.docker.internal:2368\nGHOST_CONTENT_API_KEY=%s\nREVALIDATE_SECRET=%s\n' \
+            "$GHOST_ZEUS_CONTENT_KEY" "$REVALIDATE_SECRET" > .env.production
 
       - name: Build and deploy
         run: docker compose up -d --build
