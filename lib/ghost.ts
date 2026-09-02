@@ -10,6 +10,17 @@ export type GhostPost = {
   primary_tag?: { name: string } | null;
 };
 
+export type GhostPage = {
+  id: string;
+  slug: string;
+  title: string;
+  html?: string | null;
+  excerpt?: string | null;
+  custom_excerpt?: string | null;
+  feature_image?: string | null;
+  updated_at?: string | null;
+};
+
 const GHOST_URL = process.env.GHOST_URL || "https://cms.zeusdelacruz.com";
 const GHOST_KEY = process.env.GHOST_CONTENT_API_KEY || "";
 
@@ -50,6 +61,17 @@ export async function getLatestPosts(limit = 3): Promise<GhostPost[]> {
     return data?.posts ?? [];
   } catch {
     return [];
+  }
+}
+
+export async function getPage(slug: string): Promise<GhostPage | null> {
+  try {
+    const data = (await ghostFetch(
+      `pages/slug/${slug}/?`
+    )) as { pages?: GhostPage[] } | null;
+    return data?.pages?.[0] ?? null;
+  } catch {
+    return null;
   }
 }
 

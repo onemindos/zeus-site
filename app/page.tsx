@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getLatestPosts, formatDate } from "@/lib/ghost";
+import { getLatestPosts, getPage, formatDate } from "@/lib/ghost";
+import { PILLARS, FALLBACK_POSTS } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Zeus DeLaCruz — Builder, Operator, Architect",
 };
 
-const FALLBACK_POSTS = [
-  { slug: "tak-on-kubernetes", primary_tag: { name: "Operations" }, title: "How I run a TAK server on Kubernetes for under $100/mo", published_at: "2026-09-01", reading_time: 8 },
-  { slug: "12-agent-mesh", primary_tag: { name: "AI Agents" }, title: "Building a 12-agent mesh on NATS — what I learned", published_at: "2026-08-28", reading_time: 12 },
-  { slug: "sovereign-sensors", primary_tag: { name: "Homesteading" }, title: "Sovereign sensors: building a geo-aware farm", published_at: "2026-08-22", reading_time: 6 },
-];
-
 export default async function Home() {
-  const ghostPosts = await getLatestPosts(3);
+  const [ghostPosts, heroPage] = await Promise.all([
+    getLatestPosts(3),
+    getPage("home"),
+  ]);
+
   const posts = ghostPosts.length > 0 ? ghostPosts : FALLBACK_POSTS;
+
+  // Ghost Page "home" can override hero copy — falls back to hardcoded
+  const heroTitle = heroPage?.title || "I build systems that don't fail when it matters";
+  const heroExcerpt = heroPage?.custom_excerpt || "Zeus DeLaCruz — founder of OneMind OS. I build sovereign operations infrastructure, teach the Sovereign Stack, and document the entire process in public.";
 
   return (
     <>
@@ -23,11 +26,22 @@ export default async function Home() {
         <div className="hero-bg" />
         <div style={{ maxWidth: "800px", zIndex: 1 }}>
           <div className="tag">Builder · Operator · Architect</div>
-          <h1>I build systems<br />that <span className="accent">don't fail</span><br />when it matters</h1>
-          <p style={{ fontSize: "1.15rem", maxWidth: "560px", margin: "1.5rem 0 2.5rem" }}>
-            Zeus DeLaCruz — founder of OneMind OS. I build sovereign operations infrastructure,
-            teach the Sovereign Stack, and document the entire process in public.
-          </p>
+          {heroPage?.html ? (
+            <div dangerouslySetInnerHTML={{ __html: heroPage.html }} />
+          ) : (
+            <>
+              <h1>
+                {heroTitle.includes("don't fail") ? (
+                  <>I build systems<br />that <span className="accent">don't fail</span><br />when it matters</>
+                ) : (
+                  heroTitle
+                )}
+              </h1>
+              <p style={{ fontSize: "1.15rem", maxWidth: "560px", margin: "1.5rem 0 2.5rem" }}>
+                {heroExcerpt}
+              </p>
+            </>
+          )}
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <Link href="/courses" className="btn-primary">Start Learning →</Link>
             <Link href="/about" className="btn-ghost">My Story</Link>
@@ -43,14 +57,7 @@ export default async function Home() {
           <div className="tag">What I Do</div>
           <h2 style={{ marginBottom: "3rem" }}>Six pillars. One mission.</h2>
           <div className="card-grid">
-            {[
-              { icon: "🛡️", title: "OneMind OS", desc: "Sovereign ops platform on TAK. Sense → Fuse → Decide → Act. Built in public, deployed in production." },
-              { icon: "📡", title: "The Sovereign Stack", desc: "Flagship course. NATS, TAK, AI agents, geo stack — you build what I run." },
-              { icon: "🌾", title: "Homesteading", desc: "Off-grid tech integration. Sensors, automation, and resilient systems for the land." },
-              { icon: "💰", title: "Finance", desc: "Sovereign wealth. DeFi infrastructure, multi-sig, and financial independence frameworks." },
-              { icon: "🤸", title: "Wellness", desc: "Optimized performance for builders who operate under pressure." },
-              { icon: "🔒", title: "Security", desc: "Guardian protocols. Physical and digital security for sovereign living." },
-            ].map(c => (
+            {PILLARS.map(c => (
               <div className="card" key={c.title}>
                 <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>{c.icon}</div>
                 <h3 style={{ marginBottom: "0.6rem" }}>{c.title}</h3>
