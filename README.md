@@ -2,7 +2,7 @@
 
 **Live:** https://zeusdelacruz.com  
 **Repo:** https://github.com/onemindos/zeus-site  
-**Branch:** `main` → auto-deploys to GitHub Pages on every push  
+**Branch:** `main` → auto-deploys to Droplet via self-hosted runner on every push  
 **Status:** Placeholder v2 — full rebuild to Next.js + Payload CMS queued
 
 ---
@@ -41,7 +41,7 @@ The live site is a **Vite + React placeholder** with 6 pages of foundational con
 | Styling | `src/theme.css` (custom CSS, no framework) |
 | Linting | oxlint |
 | Build output | `dist/` — static HTML |
-| Deploy | GitHub Actions → GitHub Pages (uploads repo root) |
+| Deploy | GitHub Actions → self-hosted runner → Docker on Droplet |
 
 ### Local development
 ```bash
@@ -89,22 +89,22 @@ zeus-site/
 ```
 git push origin main
   → GitHub Actions (.github/workflows/deploy.yml)
-  → Uploads repo root to GitHub Pages (no build step — pre-built)
-  → Live at https://zeusdelacruz.com (~1 min)
+  → self-hosted runner on onemind-web Droplet (138.197.0.156)
+  → docker compose up -d --build
+  → health check passes
+  → Live at https://zeusdelacruz.com (~2 min)
 ```
-
-**Note:** The current workflow uploads the repo root directly (not `dist/`). This works because `index.html` is at root. When the v3 rebuild lands, the workflow must be updated to build first and upload `dist/` or `out/`.
 
 ---
 
 ## DNS & hosting
 
-| Record | Type | Value |
-|---|---|---|
-| `zeusdelacruz.com` | CNAME | `onemindos.github.io` |
-| `www.zeusdelacruz.com` | CNAME | `zeusdelacruz.com` |
+| Record | Type | Value | Proxied |
+|---|---|---|---|
+| `zeusdelacruz.com` | A | `138.197.0.156` | Yes (orange cloud) |
+| `www.zeusdelacruz.com` | A | `138.197.0.156` | Yes (orange cloud) |
 
-DNS managed in Cloudflare (zone `223d69a6b69728e72d9d6e2dcb1ab916`), grey-cloud (DNS only).
+DNS managed in Cloudflare (zone `223d69a6b69728e72d9d6e2dcb1ab916`), orange-cloud (proxied). Cloudflare handles SSL (Flexible mode) — origin serves HTTP on port 80. Hosting: DigitalOcean Droplet `onemind-web` (138.197.0.156, nyc3, $24/mo shared with onemindos.com). Nginx reverse proxy → Docker container on port 3001.
 
 ⚠️ **DO NOT touch MX, TXT, or DMARC records on zeusdelacruz.com** — Google Workspace email is live on this domain. Touching those records will break Zeus's email.
 
@@ -118,8 +118,8 @@ The v2 placeholder will be replaced with a full **Next.js + Payload CMS** stack.
 - **Framework:** Vite → Next.js 16 (App Router, SSR/ISR)
 - **CMS:** Payload CMS (self-hosted on DOKS cluster) — admin panel at `cms.zeusdelacruz.com`
 - **Database:** PostgreSQL on DOKS persistent volume
-- **Hosting:** GitHub Pages → Cloudflare Tunnel → DOKS (same as CloudTAK, cam.onemindos.dev)
-- **DNS flip:** One CNAME change — zero downtime
+- **Hosting:** Already on Droplet (onemind-web, 138.197.0.156) — Payload CMS added as additional service on same Droplet
+- **DNS:** Already pointing to Droplet — no flip needed
 
 ### Why Payload CMS
 Zeus needs to publish blog posts, course pages, podcast episodes, speaking dates, and store products without touching code. Payload gives:
