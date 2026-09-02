@@ -1,5 +1,8 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const links = [
   { to: "/", label: "Home" },
@@ -11,7 +14,7 @@ const links = [
 ];
 
 export default function Nav() {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -26,18 +29,18 @@ export default function Nav() {
   return (
     <>
       <nav className={scrolled ? "nav-scrolled" : ""}>
-        <Link to="/" className="nav-logo">Zeus <span>DeLaCruz</span></Link>
+        <Link href="/" className="nav-logo">Zeus <span>DeLaCruz</span></Link>
 
         <ul className="nav-links">
           {links.map(l => (
             <li key={l.to}>
-              <Link to={l.to} className={pathname === l.to ? "active" : ""}>{l.label}</Link>
+              <Link href={l.to} className={pathname === l.to ? "active" : ""}>{l.label}</Link>
             </li>
           ))}
         </ul>
 
         <div className="nav-right">
-          <Link to="/contact" className="btn-primary">Work With Me</Link>
+          <Link href="/contact" className="btn-primary">Work With Me</Link>
           <button className="nav-burger" onClick={() => setOpen(o => !o)} aria-label="Toggle menu">
             <span className={open ? "burger-line top open" : "burger-line top"} />
             <span className={open ? "burger-line mid open" : "burger-line mid"} />
@@ -46,14 +49,13 @@ export default function Nav() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       <div className={open ? "mobile-menu open" : "mobile-menu"}>
         {links.map(l => (
-          <Link key={l.to} to={l.to} className={pathname === l.to ? "mobile-link active" : "mobile-link"}>
+          <Link key={l.to} href={l.to} className={pathname === l.to ? "mobile-link active" : "mobile-link"}>
             {l.label}
           </Link>
         ))}
-        <Link to="/contact" className="btn-primary" style={{ marginTop: "1rem", width: "100%", justifyContent: "center" }}>
+        <Link href="/contact" className="btn-primary" style={{ marginTop: "1rem", width: "100%", justifyContent: "center" }}>
           Work With Me
         </Link>
       </div>

@@ -1,8 +1,25 @@
+# Next.js
+.next/
+out/
+
+# Dependencies
 node_modules/
-dist/
+
+# Env files — never commit secrets
 .env
-.env.*
-!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.production
+
+# Build artifacts
+dist/
+
+# OS
 .DS_Store
-*.local
-.wrangler/
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
