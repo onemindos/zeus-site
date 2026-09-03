@@ -64,12 +64,20 @@ export const CONTACT_CHANNELS = [
   { icon: "💻", label: "GitHub", val: "github.com/onemindos" },
 ];
 
-// Fallback blog posts shown when Ghost has no published content yet
-export const FALLBACK_POSTS = [
-  { slug: "tak-on-kubernetes", primary_tag: { name: "Operations" }, title: "How I run a TAK server on Kubernetes for under $100/mo", excerpt: "TAK Server 5.7 on DOKS with cert auth, WebTAK, and a full NATS bridge — the exact setup powering OneMind OS in production.", published_at: "2026-09-01", reading_time: 8 },
-  { slug: "12-agent-mesh", primary_tag: { name: "AI Agents" }, title: "Building a 12-agent mesh on NATS — what I learned", excerpt: "After running 12 Hermes profiles as autonomous agents on one NATS cluster, here's the architecture, the failures, and what actually works.", published_at: "2026-08-28", reading_time: 12 },
-  { slug: "sovereign-sensors", primary_tag: { name: "Homesteading" }, title: "Sovereign sensors: building a geo-aware farm", excerpt: "Environmental sensors, Tile38 geofencing, and Node-RED automations — how I turned 5 acres into a living data platform.", published_at: "2026-08-22", reading_time: 6 },
-  { slug: "cloudtak-deep-dive", primary_tag: { name: "TAK" }, title: "CloudTAK deep dive: browser-native SA without ATAK", excerpt: "The dfpc-coe CloudTAK fork running on DOKS — plugins, AI panel integration, and why MapLibre beats Mapbox for sovereign deployments.", published_at: "2026-08-15", reading_time: 10 },
-  { slug: "nats-truth", primary_tag: { name: "Infrastructure" }, title: "Why NATS is the only message bus that makes sense for edge ops", excerpt: "After running Kafka, MQTT, and Redis Streams for field operations, here's why NATS won and the others got cut.", published_at: "2026-08-08", reading_time: 7 },
-  { slug: "sovereign-finance", primary_tag: { name: "Finance" }, title: "The sovereign wealth stack: DeFi without the casino", excerpt: "Multi-sig, self-custody, and DeFi infrastructure that isn't gambling — building financial sovereignty for builders who operate.", published_at: "2026-08-01", reading_time: 9 },
+export type FallbackPost = {
+  slug: string;
+  tag: string;
+  title: string;
+  excerpt: string;
+  publishedAt: string;
+  readingTime: number;
+};
+
+export const FALLBACK_POSTS: FallbackPost[] = [
+  { slug: "tak-on-kubernetes", tag: "Operations", title: "How I run a TAK server on Kubernetes for under $100/mo", excerpt: "TAK Server 5.7 on DOKS with cert auth, WebTAK, and a full NATS bridge — the exact setup powering OneMind OS in production.", publishedAt: "2026-09-01", readingTime: 8 },
+  { slug: "12-agent-mesh", tag: "AI Agents", title: "Building a 12-agent mesh on NATS — what I learned", excerpt: "After running 12 Hermes profiles as autonomous agents on one NATS cluster, here's the architecture, the failures, and what actually works.", publishedAt: "2026-08-28", readingTime: 12 },
+  { slug: "sovereign-sensors", tag: "Homesteading", title: "Sovereign sensors: building a geo-aware farm", excerpt: "Environmental sensors, Tile38 geofencing, and Node-RED automations — how I turned 5 acres into a living data platform.", publishedAt: "2026-08-22", readingTime: 6 },
+  { slug: "cloudtak-deep-dive", tag: "TAK", title: "CloudTAK deep dive: browser-native SA without ATAK", excerpt: "The dfpc-coe CloudTAK fork running on DOKS — plugins, AI panel integration, and why MapLibre beats Mapbox for sovereign deployments.", publishedAt: "2026-08-15", readingTime: 10 },
+  { slug: "nats-truth", tag: "Infrastructure", title: "Why NATS is the only message bus that makes sense for edge ops", excerpt: "After running Kafka, MQTT, and Redis Streams for field operations, here's why NATS won and the others got cut.", publishedAt: "2026-08-08", readingTime: 7 },
+  { slug: "sovereign-finance", tag: "Finance", title: "The sovereign wealth stack: DeFi without the casino", excerpt: "Multi-sig, self-custody, and DeFi infrastructure that isn't gambling — building financial sovereignty for builders who operate.", publishedAt: "2026-08-01", readingTime: 9 },
 ];

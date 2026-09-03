@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getPage } from "@/lib/ghost";
+import { getPage } from "@/lib/payload";
 import { COURSE_MODULES, COURSES_COMING_SOON } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default async function Courses() {
           <div className="tag">Courses</div>
           <h1>Learn by <span className="accent">building real systems</span></h1>
           <p style={{ fontSize: "1.1rem", maxWidth: "580px", marginTop: "1rem" }}>
-            {page?.custom_excerpt || "Every course I teach is a system I run. No toy demos. No contrived examples. You ship the actual infrastructure."}
+            {page?.excerpt || "Every course I teach is a system I run. No toy demos. No contrived examples. You ship the actual infrastructure."}
           </p>
         </div>
       </section>
@@ -31,13 +31,9 @@ export default async function Courses() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
             <div>
               <h2 style={{ marginBottom: "1rem" }}>The Sovereign Stack</h2>
-              {page?.html ? (
-                <div className="post-content" dangerouslySetInnerHTML={{ __html: page.html }} />
-              ) : (
-                <p style={{ marginBottom: "1.5rem" }}>
-                  Build a fully operational OneMind fabric from scratch — NATS cluster, TAK server, AI agent mesh, geo stack, Cloudflare Zero Trust. 8 modules, real deployments, production configs.
-                </p>
-              )}
+              <p style={{ marginBottom: "1.5rem" }}>
+                Build a fully operational OneMind fabric from scratch — NATS cluster, TAK server, AI agent mesh, geo stack, Cloudflare Zero Trust. 8 modules, real deployments, production configs.
+              </p>
               <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "2rem" }}>
                 {[{ n: "8", l: "Modules" }, { n: "40+", l: "Hours" }, { n: "Live", l: "Cohorts" }].map(s => (
                   <div key={s.l} style={{ textAlign: "center", padding: "1rem 1.5rem", background: "var(--black-3)", border: "1px solid var(--line)", borderRadius: "6px" }}>

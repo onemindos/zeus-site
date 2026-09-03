@@ -1,36 +1,33 @@
-name: Deploy to Droplet
+name: Deploy zeus-site
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:
-
-concurrency:
-  group: deploy-zeus
-  cancel-in-progress: true
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted, zeus-v2]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Write env
         env:
-          GHOST_ZEUS_CONTENT_KEY: ${{ secrets.GHOST_ZEUS_CONTENT_KEY }}
-          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET_ZEUS }}
+          DATABASE_URI: ${{ secrets.DATABASE_URI_ZEUS }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET_ZEUS }}
         run: |
-          printf 'GHOST_URL=http://host.docker.internal:2368\nGHOST_CONTENT_API_KEY=%s\nREVALIDATE_SECRET=%s\n' \
-            "$GHOST_ZEUS_CONTENT_KEY" "$REVALIDATE_SECRET" > .env.production
+          printf 'DATABASE_URI=%s\nPAYLOAD_SECRET=%s\n' \
+            "$DATABASE_URI" "$PAYLOAD_SECRET" > .env.production
 
-      - name: Build and deploy
-        run: docker compose up -d --build
+      - name: Build and start
+        env:
+          DATABASE_URI: ${{ secrets.DATABASE_URI_ZEUS }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET_ZEUS }}
+        run: |
+          DATABASE_URI="$DATABASE_URI" PAYLOAD_SECRET="$PAYLOAD_SECRET" \
+            docker compose up -d --build
 
       - name: Health check
-        run: |
-          sleep 5
-          curl -f http://localhost:3001 || exit 1
+        run: sleep 10 && curl -f http://localhost:3001 || exit 1
 
-      - name: Clean up old images
+      - name: Prune images
         run: docker image prune -f

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getPage } from "@/lib/ghost";
+import { getPage } from "@/lib/payload";
 import { SPEAKING_TOPICS, SPEAKING_FORMATS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default async function Speaking() {
           <div className="tag">Speaking</div>
           <h1>I talk about what<br /><span className="accent">I actually build</span></h1>
           <p style={{ fontSize: "1.1rem", maxWidth: "560px", marginTop: "1rem", marginBottom: "2.5rem" }}>
-            {page?.custom_excerpt || "Keynotes, panels, and workshops on sovereign ops, AI agent architecture, and the future of situational awareness infrastructure."}
+            {page?.excerpt || "Keynotes, panels, and workshops on sovereign ops, AI agent architecture, and the future of situational awareness infrastructure."}
           </p>
           <Link href="/contact" className="btn-primary">Book Me →</Link>
         </div>
@@ -57,9 +57,6 @@ export default async function Speaking() {
               </div>
             ))}
           </div>
-          {page?.html && (
-            <div className="post-content" style={{ marginTop: "3rem" }} dangerouslySetInnerHTML={{ __html: page.html }} />
-          )}
           <div style={{ textAlign: "center", marginTop: "3rem" }}>
             <Link href="/contact" className="btn-primary">Book a Speaking Engagement →</Link>
           </div>

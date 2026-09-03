@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getLatestPosts, getPage, formatDate } from "@/lib/ghost";
+import { getLatestPosts, getPage, formatDate, toPostCard, fallbackToCard, type PostCardData } from "@/lib/payload";
 import { PILLARS, FALLBACK_POSTS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -8,40 +8,34 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [ghostPosts, heroPage] = await Promise.all([
+  const [payloadPosts, heroPage] = await Promise.all([
     getLatestPosts(3),
     getPage("home"),
   ]);
 
-  const posts = ghostPosts.length > 0 ? ghostPosts : FALLBACK_POSTS;
+  const posts: PostCardData[] = payloadPosts.length > 0
+    ? payloadPosts.map(toPostCard)
+    : FALLBACK_POSTS.map(fallbackToCard);
 
-  // Ghost Page "home" can override hero copy — falls back to hardcoded
   const heroTitle = heroPage?.title || "I build systems that don't fail when it matters";
-  const heroExcerpt = heroPage?.custom_excerpt || "Zeus DeLaCruz — founder of OneMind OS. I build sovereign operations infrastructure, teach the Sovereign Stack, and document the entire process in public.";
+  const heroExcerpt = heroPage?.excerpt || "Zeus DeLaCruz — founder of OneMind OS. I build sovereign operations infrastructure, teach the Sovereign Stack, and document the entire process in public.";
 
   return (
     <>
-      {/* HERO */}
       <section className="hero-full">
         <div className="hero-bg" />
         <div style={{ maxWidth: "800px", zIndex: 1 }}>
           <div className="tag">Builder · Operator · Architect</div>
-          {heroPage?.html ? (
-            <div dangerouslySetInnerHTML={{ __html: heroPage.html }} />
-          ) : (
-            <>
-              <h1>
-                {heroTitle.includes("don't fail") ? (
-                  <>I build systems<br />that <span className="accent">don't fail</span><br />when it matters</>
-                ) : (
-                  heroTitle
-                )}
-              </h1>
-              <p style={{ fontSize: "1.15rem", maxWidth: "560px", margin: "1.5rem 0 2.5rem" }}>
-                {heroExcerpt}
-              </p>
-            </>
-          )}
+          <h1>
+            {heroTitle.includes("don't fail") ? (
+              <>I build systems<br />that <span className="accent">don't fail</span><br />when it matters</>
+            ) : (
+              heroTitle
+            )}
+          </h1>
+          <p style={{ fontSize: "1.15rem", maxWidth: "560px", margin: "1.5rem 0 2.5rem" }}>
+            {heroExcerpt}
+          </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <Link href="/courses" className="btn-primary">Start Learning →</Link>
             <Link href="/about" className="btn-ghost">My Story</Link>
@@ -51,7 +45,6 @@ export default async function Home() {
 
       <div className="divider" />
 
-      {/* WHAT I DO */}
       <section style={{ background: "var(--black-2)" }}>
         <div className="container">
           <div className="tag">What I Do</div>
@@ -70,7 +63,6 @@ export default async function Home() {
 
       <div className="divider" />
 
-      {/* LATEST POSTS */}
       <section>
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "2.5rem", flexWrap: "wrap", gap: "1rem" }}>
@@ -86,10 +78,10 @@ export default async function Home() {
                 <div className="card" style={{ cursor: "pointer", height: "100%" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
                     <span style={{ fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--red-bright)" }}>
-                      {p.primary_tag?.name ?? "Writing"}
+                      {p.tag}
                     </span>
                     <span style={{ fontSize: "0.75rem", color: "var(--dim)" }}>
-                      {formatDate(p.published_at)} · {p.reading_time ?? 5} min
+                      {formatDate(p.publishedAt)} · {p.readingTime} min
                     </span>
                   </div>
                   <h3 style={{ fontSize: "1.05rem", lineHeight: "1.4", color: "var(--white)" }}>{p.title}</h3>
@@ -102,7 +94,6 @@ export default async function Home() {
 
       <div className="divider" />
 
-      {/* CTA */}
       <section style={{ background: "var(--black-2)", textAlign: "center" }}>
         <div className="container" style={{ maxWidth: "600px", margin: "0 auto" }}>
           <div className="tag">Community</div>

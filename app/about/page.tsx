@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getPage } from "@/lib/ghost";
+import { getPage } from "@/lib/payload";
 import { ABOUT_PRINCIPLES, ABOUT_LINKS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -20,8 +20,8 @@ export default async function About() {
             <div className="tag">About</div>
             <h1 style={{ marginBottom: "0.5rem" }}>{page?.title || "Zeus DeLaCruz"}</h1>
             <div style={{ color: "var(--red-bright)", fontWeight: 600, marginBottom: "1.5rem", fontSize: "1rem" }}>Builder · Founder · Operator</div>
-            {page?.html ? (
-              <div className="post-content" dangerouslySetInnerHTML={{ __html: page.html }} />
+            {page?.excerpt ? (
+              <p style={{ fontSize: "1.05rem", marginBottom: "1rem" }}>{page.excerpt}</p>
             ) : (
               <>
                 <p style={{ fontSize: "1.05rem", marginBottom: "1rem" }}>

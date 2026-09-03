@@ -1,14 +1,22 @@
 services:
   zeus-site:
-    build: .
+    build:
+      context: .
+      args:
+        DATABASE_URI: ${DATABASE_URI}
+        PAYLOAD_SECRET: ${PAYLOAD_SECRET}
     container_name: zeus-site
     restart: always
     ports:
       - "3001:3000"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    networks:
+      - onemind-net
     env_file:
       - path: .env.production
         required: false
     environment:
       - NODE_ENV=production
+
+networks:
+  onemind-net:
+    external: true
