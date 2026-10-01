@@ -1,80 +1,75 @@
 import type { Metadata } from "next";
+import { getPage, getOffers } from "@/lib/payload";
 import Link from "next/link";
-import { getPage } from "@/lib/payload";
-import { COURSE_MODULES, COURSES_COMING_SOON } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Courses",
-  description: "Every course I teach is a system I run. No toy demos. You ship real infrastructure.",
+  description: "Learn the Sovereign Stack — OneMind OS education and training programs.",
 };
 
-export default async function Courses() {
-  const page = await getPage("courses");
+export default async function CoursesPage() {
+  const [page, offers] = await Promise.all([
+    getPage("courses"),
+    getOffers("course"),
+  ]);
 
   return (
     <>
-      <section style={{ paddingTop: "calc(68px + 5rem)", paddingBottom: "4rem", paddingLeft: "clamp(1.5rem,5vw,4rem)", paddingRight: "clamp(1.5rem,5vw,4rem)", background: "var(--black-2)" }}>
-        <div className="container">
-          <div className="tag">Courses</div>
-          <h1>Learn by <span className="accent">building real systems</span></h1>
-          <p style={{ fontSize: "1.1rem", maxWidth: "580px", marginTop: "1rem" }}>
-            {page?.excerpt || "Every course I teach is a system I run. No toy demos. No contrived examples. You ship the actual infrastructure."}
-          </p>
-        </div>
+      <section style={{ paddingTop: "calc(68px + 5rem)", paddingBottom: "5rem", paddingLeft: "clamp(1.5rem,5vw,4rem)", paddingRight: "clamp(1.5rem,5vw,4rem)", background: "var(--black-2)", textAlign: "center" }}>
+        <div className="tag">Education</div>
+        <h1 style={{ marginBottom: "1rem" }}>{(page as any)?.heroTitle || page?.title || "Learn the Sovereign Stack"}</h1>
+        <p style={{ maxWidth: 600, margin: "0 auto 2rem", fontSize: "1.1rem" }}>{page?.excerpt || "Operator-grade training for builders who run their own infrastructure."}</p>
+        <Link href="/contact" className="btn-primary">Enroll now →</Link>
       </section>
 
-      <div className="divider" />
-
-      <section>
+      <section style={{ paddingLeft: "clamp(1.5rem,5vw,4rem)", paddingRight: "clamp(1.5rem,5vw,4rem)", paddingTop: "5rem", paddingBottom: "5rem" }}>
         <div className="container">
-          <div className="tag">Flagship</div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
-            <div>
-              <h2 style={{ marginBottom: "1rem" }}>The Sovereign Stack</h2>
-              <p style={{ marginBottom: "1.5rem" }}>
-                Build a fully operational OneMind fabric from scratch — NATS cluster, TAK server, AI agent mesh, geo stack, Cloudflare Zero Trust. 8 modules, real deployments, production configs.
-              </p>
-              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "2rem" }}>
-                {[{ n: "8", l: "Modules" }, { n: "40+", l: "Hours" }, { n: "Live", l: "Cohorts" }].map(s => (
-                  <div key={s.l} style={{ textAlign: "center", padding: "1rem 1.5rem", background: "var(--black-3)", border: "1px solid var(--line)", borderRadius: "6px" }}>
-                    <div style={{ fontSize: "1.8rem", fontWeight: 800, color: "var(--white)" }}>{s.n}</div>
-                    <div style={{ fontSize: "0.78rem", color: "var(--dim)" }}>{s.l}</div>
+          {offers.length > 0 ? (
+            <div className="card-grid">
+              {offers.map((offer) => (
+                <div key={offer.id} className="card">
+                  <div className="tag">{offer.type}</div>
+                  <h3 style={{ marginBottom: "0.5rem", color: "var(--white)" }}>{offer.title}</h3>
+                  {offer.tagline && <p style={{ marginBottom: "1.5rem" }}>{offer.tagline}</p>}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "auto", paddingTop: "1.5rem", borderTop: "1px solid var(--line)" }}>
+                    <div>
+                      <div style={{ color: "var(--red-bright)", fontWeight: 700, fontSize: "1.1rem" }}>
+                        {offer.priceLabel || (offer.price ? `$${offer.price.toLocaleString()}` : "Custom")}
+                      </div>
+                      {offer.duration && <div style={{ fontSize: "0.8rem", color: "var(--dim)" }}>{offer.duration}</div>}
+                    </div>
+                    <Link href={offer.checkoutUrl || offer.bookingUrl || "/contact"} className="btn-primary" style={{ padding: "10px 20px" }}>
+                      {offer.checkoutUrl ? "Enroll →" : "Book a call →"}
+                    </Link>
                   </div>
-                ))}
-              </div>
-              <a href="https://community.onemindos.com" className="btn-primary" target="_blank" rel="noreferrer">Enroll Now →</a>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {COURSE_MODULES.map((item, i) => (
-                <div key={item} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.9rem 1rem", background: "var(--black-3)", border: "1px solid var(--line)", borderRadius: "6px" }}>
-                  <span style={{ color: "var(--red-bright)", fontWeight: 700, minWidth: "1.5rem", fontSize: "0.8rem" }}>{String(i + 1).padStart(2, "0")}</span>
-                  <span style={{ fontSize: "0.9rem" }}>{item}</span>
                 </div>
               ))}
             </div>
-          </div>
+          ) : (
+            // Fallback static cards until offers are added in CMS
+            <div className="card-grid">
+              {[
+                { tag: "Course", title: "Sovereign Stack Foundations", tagline: "NATS, Kubernetes, TAK, and AI agents from scratch.", price: "$497", duration: "Self-paced · 8 modules" },
+                { tag: "Cohort", title: "OneMind Operator Bootcamp", tagline: "10-week live cohort. Build your stack, deploy your ops.", price: "$2,497", duration: "10 weeks · cohort" },
+                { tag: "1:1", title: "Private Coaching", tagline: "Direct access. Weekly 1:1s, async support, full roadmap.", price: "$5,000/mo", duration: "3-month minimum" },
+              ].map((o) => (
+                <div key={o.title} className="card">
+                  <div className="tag">{o.tag}</div>
+                  <h3 style={{ marginBottom: "0.5rem", color: "var(--white)" }}>{o.title}</h3>
+                  <p style={{ marginBottom: "1.5rem" }}>{o.tagline}</p>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "1.5rem", borderTop: "1px solid var(--line)" }}>
+                    <div>
+                      <div style={{ color: "var(--red-bright)", fontWeight: 700 }}>{o.price}</div>
+                      <div style={{ fontSize: "0.8rem", color: "var(--dim)" }}>{o.duration}</div>
+                    </div>
+                    <Link href="/contact" className="btn-primary" style={{ padding: "10px 20px" }}>Apply →</Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
-
-      <div className="divider" />
-
-      <section style={{ background: "var(--black-2)" }}>
-        <div className="container">
-          <div className="tag">Coming Soon</div>
-          <h2 style={{ marginBottom: "2.5rem" }}>What's next</h2>
-          <div className="card-grid">
-            {COURSES_COMING_SOON.map(c => (
-              <div key={c.title} className="card">
-                <div className="tag" style={{ opacity: 0.6 }}>{c.tag}</div>
-                <h3 style={{ marginBottom: "0.6rem" }}>{c.title}</h3>
-                <p style={{ fontSize: "0.9rem", marginBottom: "1.5rem" }}>{c.desc}</p>
-                <span style={{ fontSize: "0.8rem", color: "var(--dim)", fontStyle: "italic" }}>Notify me when available →</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <div className="divider" />
     </>
   );

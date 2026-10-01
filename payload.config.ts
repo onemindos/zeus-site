@@ -9,6 +9,7 @@ import { Offers } from "./collections/Offers";
 import { Directory } from "./collections/Directory";
 import { Testimonials } from "./collections/Testimonials";
 import { Leads } from "./collections/Leads";
+import { Navigation } from "./globals/Navigation";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -23,6 +24,7 @@ export default buildConfig({
     },
   },
   collections: [Posts, Pages, Media, Users, Offers, Directory, Testimonials, Leads],
+  globals: [Navigation],
   editor: lexicalEditor(),
   db: postgresAdapter({
     pool: {
