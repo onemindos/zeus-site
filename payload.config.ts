@@ -1,10 +1,14 @@
 import { buildConfig } from "payload";
-import { postgresAdapter } from "@payloadcms/db-postgres";
+import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { Posts } from "./collections/Posts";
 import { Pages } from "./collections/Pages";
 import { Media } from "./collections/Media";
 import { Users } from "./collections/Users";
+import { Offers } from "./collections/Offers";
+import { Directory } from "./collections/Directory";
+import { Testimonials } from "./collections/Testimonials";
+import { Leads } from "./collections/Leads";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -18,11 +22,11 @@ export default buildConfig({
       titleSuffix: "— Zeus DeLaCruz",
     },
   },
-  collections: [Posts, Pages, Media, Users],
+  collections: [Posts, Pages, Media, Users, Offers, Directory, Testimonials, Leads],
   editor: lexicalEditor(),
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || "",
+  db: sqliteAdapter({
+    client: {
+      url: "file:databases/zeus.sqlite",
     },
   }),
   secret: process.env.PAYLOAD_SECRET || "",
