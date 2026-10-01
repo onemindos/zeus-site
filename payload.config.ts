@@ -1,5 +1,5 @@
 import { buildConfig } from "payload";
-import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { Posts } from "./collections/Posts";
 import { Pages } from "./collections/Pages";
@@ -24,9 +24,9 @@ export default buildConfig({
   },
   collections: [Posts, Pages, Media, Users, Offers, Directory, Testimonials, Leads],
   editor: lexicalEditor(),
-  db: sqliteAdapter({
-    client: {
-      url: "file:databases/zeus.sqlite",
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.DATABASE_URI || "postgresql://zeus_site:zeus_site@zeus-site-postgres:5432/zeus_site",
     },
   }),
   secret: process.env.PAYLOAD_SECRET || "",
