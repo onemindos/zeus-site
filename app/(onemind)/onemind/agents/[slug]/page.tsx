@@ -2,14 +2,15 @@ import { agents } from "@/data/agents";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-interface Props { params: { slug: string }; }
+interface Props { params: Promise<{ slug: string }>; }
 
 export function generateStaticParams() {
   return agents.map((a) => ({ slug: a.slug }));
 }
 
-export default function AgentPage({ params }: Props) {
-  const agent = agents.find((a) => a.slug === params.slug);
+export default async function AgentPage({ params }: Props) {
+  const { slug } = await params;
+  const agent = agents.find((a) => a.slug === slug);
   if (!agent) return notFound();
 
   const related = agents.filter((a) => agent.relatedAgents.includes(a.slug) && a.slug !== agent.slug);

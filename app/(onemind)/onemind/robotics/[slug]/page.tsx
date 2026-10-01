@@ -3,22 +3,24 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Footer from "../../components/Footer";
 
-interface Props { params: { slug: string }; }
+interface Props { params: Promise<{ slug: string }>; }
 
 export function generateStaticParams() {
   return robots.map((r) => ({ slug: r.slug }));
 }
 
-export function generateMetadata({ params }: Props) {
-  const r = robots.find((x) => x.slug === params.slug);
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params;
+  const r = robots.find((x) => x.slug === slug);
   return { title: r ? `${r.name} — OneMind Robotics` : "Not Found" };
 }
 
 const typeIcon: Record<string, string> = { aerial: "🚁", ground: "🤖", aquatic: "🌊", fixed: "📡", simulation: "⚙️" };
 const statusColor: Record<string, string> = { live: "#22c55e", development: "#f59e0b", planned: "#6b7280" };
 
-export default function RobotDetailPage({ params }: Props) {
-  const r = robots.find((x) => x.slug === params.slug);
+export default async function RobotDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const r = robots.find((x) => x.slug === slug);
   if (!r) notFound();
 
   return (

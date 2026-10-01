@@ -2,7 +2,7 @@ import Link from "next/link";
 import { plugins } from "@/data/plugins";
 import { notFound } from "next/navigation";
 
-interface Props { params: { category: string; slug: string }; }
+interface Props { params: Promise<{ category: string; slug: string }>; }
 
 export function generateStaticParams() {
   return plugins.map((p) => ({
@@ -11,8 +11,9 @@ export function generateStaticParams() {
   }));
 }
 
-export default function PluginPage({ params }: Props) {
-  const plugin = plugins.find((p) => p.category === params.category && p.slug === params.slug);
+export default async function PluginPage({ params }: Props) {
+  const { category, slug } = await params;
+  const plugin = plugins.find((p) => p.category === category && p.slug === slug);
   if (!plugin) return notFound();
 
   return (
