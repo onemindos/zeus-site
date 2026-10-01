@@ -1,3 +1,3 @@
-import { sqliteAdapter } from "@payloadcms/db-sqlite";
-const c = sqliteAdapter({ client: { url: "file:databases/zeus.sqlite" } });
+import { postgresAdapter } from "@payloadcms/db-postgres";
+const c = postgresAdapter({ pool: { connectionString: "postgresql://localhost:5432/test" } });
 console.log("OK");

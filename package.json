@@ -10,8 +10,7 @@
     "generate:types": "payload generate:types"
   },
   "dependencies": {
-    "@payloadcms/db-postgres": "^3.90.2",
-    "@payloadcms/db-sqlite": "^3.88.0",
+    "@payloadcms/db-postgres": "^3.88.0",
     "@payloadcms/next": "^3.0.0",
     "@payloadcms/richtext-lexical": "^3.0.0",
     "@react-three/drei": "^10.7.9",
