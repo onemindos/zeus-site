@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import type { Metadata } from "next";
 import { getPage } from "@/lib/payload";
 import ContactForm from "./ContactForm";

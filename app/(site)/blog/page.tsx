@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getPosts, formatDate, toPostCard, fallbackToCard, type PostCardData } from "@/lib/payload";

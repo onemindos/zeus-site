@@ -1,0 +1,67 @@
+/* OneMind OS design system — scoped to /onemind/* routes */
+/* Global resets and :root vars are handled by globals.css — only onemind-specific classes live here */
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulseRed {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139,0,0,0); }
+  50% { box-shadow: 0 0 24px 4px rgba(139,0,0,0.4); }
+}
+
+.btn-outline-red {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: transparent; color: #b91c1c;
+  padding: 0.875rem 1.75rem; border-radius: 4px;
+  font-weight: 600; font-size: 0.875rem;
+  text-decoration: none; border: 1px solid #8B0000;
+  cursor: pointer; transition: background 0.2s, color 0.2s;
+}
+.btn-outline-red:hover { background: #8B0000; color: white; }
+
+.tag-solid {
+  display: inline-block; font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: white; background: #8B0000; padding: 0.25rem 0.625rem; border-radius: 2px;
+}
+
+.card-feature {
+  background: #0a0c0e; border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 0.75rem; padding: 2rem;
+  transition: border-color 0.3s, background 0.3s;
+}
+.card-feature:hover { border-color: rgba(139,0,0,0.4); background: #111418; }
+
+.section { padding: 6rem 1.5rem; }
+@media (min-width: 768px) { .section { padding: 8rem 3rem; } }
+@media (min-width: 1024px) { .section { padding: 8rem 6rem; } }
+
+.container-tight { max-width: 64rem; margin: 0 auto; }
+.container-wide { max-width: 80rem; margin: 0 auto; }
+
+.display-xl { font-size: clamp(3rem,7vw,5.5rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.02; }
+.display-lg { font-size: clamp(2.5rem,5vw,4.5rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; }
+.display-md { font-size: clamp(2rem,4vw,3.5rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.heading { font-size: clamp(1.5rem,2.5vw,2rem); font-weight: 700; letter-spacing: -0.02em; }
+.subheading { font-size: clamp(1rem,1.5vw,1.2rem); color: var(--dim); line-height: 1.7; }
+
+.glow-red { box-shadow: 0 0 40px rgba(139,0,0,0.3), 0 0 80px rgba(139,0,0,0.1); }
+.text-glow-red { text-shadow: 0 0 40px rgba(185,28,28,0.6); }
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(139,0,0,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,0,0,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bg-radial-red { background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,0,0,0.15) 0%, transparent 70%); }
+.bg-radial-red-left { background: radial-gradient(ellipse 60% 80% at 0% 50%, rgba(139,0,0,0.12) 0%, transparent 70%); }
+
+.stat-value { font-size: clamp(2rem,4vw,3rem); font-weight: 900; color: white; }
+.stat-label { font-size: 0.8rem; color: #6b7280; margin-top: 0.25rem; }

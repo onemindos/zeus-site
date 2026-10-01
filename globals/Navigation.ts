@@ -4,7 +4,8 @@ export const Navigation: GlobalConfig = {
   slug: "navigation",
   label: "Navigation",
   admin: {
-    description: "Control the main nav links and order. Changes go live immediately — no deploy needed.",
+    description:
+      "Control the main nav links and order. Add children to create a dropdown. Changes go live immediately — no deploy needed.",
   },
   access: { read: () => true },
   fields: [
@@ -22,20 +23,29 @@ export const Navigation: GlobalConfig = {
         {
           name: "url",
           type: "text",
-          required: true,
-          admin: { description: "e.g. /about or https://community.onemindos.com" },
+          admin: {
+            description:
+              "e.g. /about — leave empty if this item is a dropdown parent only",
+          },
         },
         {
           name: "openInNewTab",
           type: "checkbox",
           defaultValue: false,
-          admin: { description: "Open in new tab (for external links)" },
         },
         {
-          name: "cta",
-          type: "checkbox",
-          defaultValue: false,
-          admin: { description: "Show as primary CTA button instead of text link" },
+          name: "children",
+          type: "array",
+          label: "Dropdown Items",
+          admin: {
+            description:
+              "Add items here to make this a dropdown menu. Leave empty for a plain link.",
+          },
+          fields: [
+            { name: "label", type: "text", required: true },
+            { name: "url", type: "text", required: true },
+            { name: "openInNewTab", type: "checkbox", defaultValue: false },
+          ],
         },
       ],
     },

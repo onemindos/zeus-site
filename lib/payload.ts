@@ -13,11 +13,18 @@ export type PostCardData = {
   readingTime: number;
 };
 
-export type NavItem = {
+export type NavChild = {
   label: string;
   url: string;
   openInNewTab?: boolean;
+};
+
+export type NavItem = {
+  label: string;
+  url?: string;
+  openInNewTab?: boolean;
   cta?: boolean;
+  children?: NavChild[];
 };
 
 export type NavData = {

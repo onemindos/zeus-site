@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import type { Metadata } from "next";
 import { getPage, getOffers } from "@/lib/payload";
 import Link from "next/link";
