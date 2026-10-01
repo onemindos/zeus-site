@@ -53,5 +53,7 @@ jobs:
             set image deployment/zeus-site \
             zeus-site=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           kubectl --kubeconfig=/tmp/kube.yaml -n zeus-site \
+            rollout restart deployment/zeus-site
+          kubectl --kubeconfig=/tmp/kube.yaml -n zeus-site \
             rollout status deployment/zeus-site --timeout=120s
           rm -f /tmp/kube.yaml
