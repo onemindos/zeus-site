@@ -10,15 +10,23 @@
     "generate:types": "payload generate:types"
   },
   "dependencies": {
-    "next": "~15.3.9",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "payload": "^3.0.0",
+    "@payloadcms/db-postgres": "^3.0.0",
+    "@payloadcms/db-sqlite": "^3.88.0",
     "@payloadcms/next": "^3.0.0",
     "@payloadcms/richtext-lexical": "^3.0.0",
-    "@payloadcms/db-postgres": "^3.0.0",
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.1",
+    "framer-motion": "^13.4.6",
     "graphql": "^16.0.0",
-    "sharp": "^0.33.0"
+    "lucide-react": "^1.49.0",
+    "next": "~15.3.9",
+    "payload": "^3.0.0",
+    "pg": "^8.23.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sass": "^1.105.0",
+    "sharp": "^0.33.5",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
