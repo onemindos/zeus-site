@@ -28,12 +28,23 @@ export default buildConfig({
   editor: lexicalEditor(),
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || "postgresql://zeus_site:***@zeus-site-postgres:5432/zeus_site",
+      connectionString: process.env.DATABASE_URI || "postgresql://zeus_site:zeus_site@zeus-site-postgres:5432/zeus_site",
     },
-    // push: true syncs the schema on every startup — safe for production on a solo-operator site
-    // where you control all schema changes. Switch to migration files if the team grows.
-    push: true,
+    push: process.env.PAYLOAD_PUSH_SCHEMA === "true",
   }),
+  onInit: async (payload) => {
+    // On first boot with an empty DB, push the schema via Drizzle.
+    // This is a no-op after tables exist (Drizzle compares schema hashes).
+    if (process.env.PAYLOAD_PUSH_SCHEMA === "true") {
+      try {
+        const { pushDevSchema } = await import("@payloadcms/drizzle");
+        await pushDevSchema(payload.db as any);
+        payload.logger.info("Schema push complete.");
+      } catch (err) {
+        payload.logger.error({ err }, "Schema push failed.");
+      }
+    }
+  },
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
