@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import "@/app/globals.css";
 import Nav from "@/app/components/Nav";
 import Footer from "@/app/components/Footer";
 
