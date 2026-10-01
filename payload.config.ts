@@ -28,8 +28,11 @@ export default buildConfig({
   editor: lexicalEditor(),
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || "postgresql://zeus_site:zeus_site@zeus-site-postgres:5432/zeus_site",
+      connectionString: process.env.DATABASE_URI || "postgresql://zeus_site:***@zeus-site-postgres:5432/zeus_site",
     },
+    // push: true syncs the schema on every startup — safe for production on a solo-operator site
+    // where you control all schema changes. Switch to migration files if the team grows.
+    push: true,
   }),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

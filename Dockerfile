@@ -35,6 +35,8 @@ COPY --from=builder /app/collections ./collections
 COPY --from=builder /app/globals ./globals
 COPY --from=builder /app/lib ./lib
 COPY --from=builder /app/data ./data
+COPY --from=builder /app/src ./src
 USER nextjs
 EXPOSE 3000
-CMD ["node_modules/.bin/next", "start"]
+# Run schema migration on every boot (no-op if schema unchanged), then start Next
+CMD ["sh", "-c", "NODE_ENV=development PAYLOAD_FORCE_DRIZZLE_PUSH=true node_modules/.bin/tsx src/migrate.ts && exec node_modules/.bin/next start"]
