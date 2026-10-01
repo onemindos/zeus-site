@@ -76,10 +76,6 @@ export default async function Courses() {
       </section>
 
       <div className="divider" />
-      <footer>
-        <p>© 2026 Zeus DeLaCruz.</p>
-        <Link href="/contact" className="btn-primary">Questions about courses →</Link>
-      </footer>
     </>
   );
 }

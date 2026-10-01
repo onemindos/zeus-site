@@ -91,4 +91,7 @@ footer p { font-size:0.85rem; color:var(--dim); }
   .nav-links { display:none; }
   .nav-burger { display:flex; }
   .nav-right .btn-primary { display:none; }
+  .about-hero-grid { grid-template-columns: 1fr !important; }
+  .about-hero-grid > *:first-child { max-width: 160px; }
+  .two-col { grid-template-columns: 1fr !important; }
 }

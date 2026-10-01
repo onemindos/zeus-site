@@ -52,11 +52,6 @@ export default async function Blog() {
         </div>
       </section>
 
-      <div className="divider" />
-      <footer>
-        <p>© 2026 Zeus DeLaCruz.</p>
-        <Link href="/" style={{ color: "var(--dim)", textDecoration: "none", fontSize: "0.85rem" }}>← Home</Link>
-      </footer>
     </>
   );
 }

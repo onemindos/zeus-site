@@ -106,14 +106,6 @@ export default async function Home() {
       </section>
 
       <div className="divider" />
-      <footer>
-        <p>© 2026 Zeus DeLaCruz.</p>
-        <div style={{ display: "flex", gap: "2rem" }}>
-          <Link href="/blog" style={{ color: "var(--dim)", textDecoration: "none", fontSize: "0.85rem" }}>Blog</Link>
-          <a href="https://onemindos.com" style={{ color: "var(--dim)", textDecoration: "none", fontSize: "0.85rem" }}>OneMind OS</a>
-          <Link href="/contact" style={{ color: "var(--dim)", textDecoration: "none", fontSize: "0.85rem" }}>Contact</Link>
-        </div>
-      </footer>
     </>
   );
 }

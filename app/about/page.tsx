@@ -14,8 +14,8 @@ export default async function About() {
   return (
     <>
       <section style={{ paddingTop: "calc(68px + 5rem)", paddingBottom: "5rem", paddingLeft: "clamp(1.5rem,5vw,4rem)", paddingRight: "clamp(1.5rem,5vw,4rem)", background: "var(--black-2)" }}>
-        <div className="container" style={{ display: "grid", gridTemplateColumns: "240px 1fr", gap: "4rem", alignItems: "start" }}>
-          <div style={{ width: "220px", height: "260px", borderRadius: "8px", background: "var(--black-3)", border: "2px solid var(--red)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "5rem", flexShrink: 0 }}>⚡</div>
+        <div className="container about-hero-grid" style={{ display: "grid", gridTemplateColumns: "clamp(160px,20vw,240px) 1fr", gap: "clamp(2rem,5vw,4rem)", alignItems: "start" }}>
+          <div style={{ width: "100%", aspectRatio: "4/5", borderRadius: "8px", background: "var(--black-3)", border: "2px solid var(--red)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "5rem", flexShrink: 0 }}>⚡</div>
           <div>
             <div className="tag">About</div>
             <h1 style={{ marginBottom: "0.5rem" }}>{page?.title || "Zeus DeLaCruz"}</h1>
@@ -84,10 +84,6 @@ export default async function About() {
       </section>
 
       <div className="divider" />
-      <footer>
-        <p>© 2026 Zeus DeLaCruz.</p>
-        <Link href="/contact" className="btn-primary">Work with me →</Link>
-      </footer>
     </>
   );
 }

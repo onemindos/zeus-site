@@ -63,11 +63,6 @@ export default async function Speaking() {
         </div>
       </section>
 
-      <div className="divider" />
-      <footer>
-        <p>© 2026 Zeus DeLaCruz.</p>
-        <Link href="/contact" className="btn-primary">Get in touch →</Link>
-      </footer>
     </>
   );
 }

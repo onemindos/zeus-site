@@ -54,11 +54,6 @@ export default async function BlogPost({ params }: Props) {
         </div>
       </section>
 
-      <div className="divider" />
-      <footer>
-        <p>© 2026 Zeus DeLaCruz.</p>
-        <Link href="/blog" style={{ color: "var(--dim)", textDecoration: "none", fontSize: "0.85rem" }}>← All posts</Link>
-      </footer>
     </>
   );
 }
