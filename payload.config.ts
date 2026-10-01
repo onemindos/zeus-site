@@ -33,9 +33,18 @@ export default buildConfig({
     push: process.env.PAYLOAD_PUSH_SCHEMA === "true",
   }),
   onInit: async (payload) => {
-    // On first boot with an empty DB, push the schema via Drizzle.
-    // This is a no-op after tables exist (Drizzle compares schema hashes).
-    if (process.env.PAYLOAD_PUSH_SCHEMA === "true") {
+    // Push Drizzle schema on first boot (creates tables). No-op if tables exist.
+    // Guarded by PAYLOAD_PUSH_SCHEMA=true so it never runs in local dev.
+    if (process.env.PAYLOAD_PUSH_SCHEMA !== "true") return;
+    try {
+      // Check if users table already exists — if so, schema is already pushed
+      await (payload.db as any).drizzle.execute(
+        (await import("drizzle-orm")).sql`SELECT 1 FROM users LIMIT 1`
+      );
+      payload.logger.info("Schema already exists, skipping push.");
+    } catch {
+      // Table doesn't exist — push schema
+      payload.logger.info("Fresh DB detected, pushing schema...");
       try {
         const { pushDevSchema } = await import("@payloadcms/drizzle");
         await pushDevSchema(payload.db as any);
