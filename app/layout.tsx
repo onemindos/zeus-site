@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Nav from "./components/Nav";
-import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -17,13 +15,13 @@ export const metadata: Metadata = {
   },
 };
 
+// Root layout: ONLY html/body/font — no Nav or Footer here.
+// Nav + Footer live in app/(site)/layout.tsx so they don't pollute /admin.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
       <body style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
